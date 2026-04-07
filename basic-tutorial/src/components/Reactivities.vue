@@ -2,21 +2,43 @@
     <div class="reactivities-container">
         <h1 class="title">Vue 3 Reactivity Showcase</h1>
         
-        
+                <!-- Computed Section -->
+        <div class="section">
+            <h2>if else if , for loop </h2>
+            <p><div v-if="isTrue">Show Values</div></p>
+            <p>Is Adult: {{ isAdult ? 'Yes' : 'No' }}</p>
+            <div>
+                        <p> <strong>V-If, V-else-if</strong ></p>
+    <h1 v-if="score >= 90">Grade: A+</h1>
+
+    <h1 v-else-if="score >= 75">Grade: B</h1>
+
+    <h1 v-else>Grade: C</h1>
+        <p> <strong>V-Show</strong ></p>
+    <p v-show="isLoggedIn">Welcome Back, User!</p>
+    <ul>
+        <p> <strong>For Loop</strong ></p>
+    <li v-for="(fruit, index) in fruits" :key="index">
+      {{ index + 1 }}. {{ fruit }}
+    </li>
+  </ul>
+  </div>
+        </div>
         <!-- Ref Section -->
         <div class="section">
             <h2>Ref</h2>
             <p>Count: {{ count }}</p>
             <button @click="increment" class="btn">Increment</button>
+            <button @click="decrement" class="btn">Decrement</button>
         </div>
         
         <!-- Reactive Section -->
         <div class="section">
             <h2>Reactive</h2>
-            <p>Name: {{ user.name }}</p>
+            <p>Name: {{ user.first_name }}</p>
             <p>Age: {{ user.age }}</p>
-            <input v-model="user.name" placeholder="Name" class="input">
-            <input v-model.number="user.age" placeholder="Age" class="input">
+            <input v-model="user.first_name" placeholder="Name" class="input">
+            <input v-model="user.age" placeholder="Age" class="input">
         </div>
         
         <!-- Computed Section -->
@@ -46,19 +68,31 @@
 <script setup>
 import { ref, reactive, computed, watch, watchEffect } from 'vue'
 
+ // if else if
+ const isTrue = ref("true");
+ const score = ref(96)
+ const isLoggedIn = ref("hi")
+ const fruits = reactive(['Apple', 'Banana', 'Mango'])
+
 // Ref
 const count = ref(0)
 const increment = () => count.value++
+const decrement = () => count.value--
+
 
 // Reactive
-const user = reactive({
-    name: 'John',
+const user = reactive([{
+    first_name: 'John',
     age: 25
-})
+},
+{
+    first_name: 'Jane',
+    age: 30
+}])
 
 // Computed
-const fullName = computed(() => `${user.name} Doe`)
-const isAdult = computed(() => user.age >= 18)
+const fullName = computed(() => `${user[0].first_name} Doe`)
+const isAdult = computed(() => user[0].age >= 18)
 
 // Watch
 const watchCount = ref(0)
@@ -111,7 +145,7 @@ const triggerEffect = () => effectCount.value++
 }
 
 .btn {
-    background: #4CAF50;
+    background: #222;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -123,7 +157,7 @@ const triggerEffect = () => effectCount.value++
 }
 
 .btn:hover {
-    background: #45a049;
+    background: #000;
 }
 
 .input {
